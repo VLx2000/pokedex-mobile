@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:api/models/pokemon.dart';
+import 'package:pokedex/models/pokemon.dart';
 
 Future<List<Pokemon>> fetchPokemon() async {
   final response =
-      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/'));
+      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/?limit=151'));
 
   List<Pokemon>? pokemonList = [];
 

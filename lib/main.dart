@@ -1,4 +1,4 @@
-import 'package:api/views/main.dart';
+import 'package:pokedex/views/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {

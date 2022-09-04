@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:api/models/pokemon.dart';
-import 'package:api/repositories/api.dart';
+import 'package:pokedex/components/pokemon_card.dart';
+import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/api/fetch_pokemon.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,7 +30,13 @@ class _HomeViewState extends State<HomeView> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Pokedex'),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: const Color(0xff212529),
+          title: Image.network(
+            'https://fontmeme.com/permalink/220904/3a93b3a770f738e70b9f89412489ef6d.png',
+            height: 44,
+          ),
         ),
         body: Center(
           child: FutureBuilder<List<Pokemon>>(
@@ -38,14 +45,10 @@ class _HomeViewState extends State<HomeView> {
               if (snapshot.hasData) {
                 List<Pokemon> list = snapshot.data ?? [];
                 return ListView.builder(
-                  itemCount: list.length,
                   padding: const EdgeInsets.all(16.0),
+                  itemCount: list.length,
                   itemBuilder: (context, i) {
-                    return FadeInImage.assetNetwork(
-                      placeholder: 'assets/pokebola.gif',
-                      image: snapshot.data![i].sprite,
-                      fit: BoxFit.cover,
-                    );
+                    return PokemonCard(pokemon: snapshot.data![i]);
                   },
                 );
               } else if (snapshot.hasError) {
