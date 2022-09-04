@@ -20,7 +20,7 @@ class PokemonCard extends StatelessWidget {
     double borderValue = 24.0;
 
     return Container(
-      height: 160.0,
+      height: 140.0,
       margin: const EdgeInsets.only(bottom: 16.0),
       decoration: BoxDecoration(
         color: desaturatedColor,
@@ -41,7 +41,11 @@ class PokemonCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: const EdgeInsets.only(
+                    left: 14,
+                    right: 14,
+                    top: 8,
+                  ),
                   child: Text(
                     StringUtils.capitalize(pokemon.name),
                     overflow: TextOverflow.ellipsis,
@@ -54,7 +58,12 @@ class PokemonCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.only(
+                  left: 14,
+                  right: 14,
+                  top: 8,
+                  bottom: 8,
+                ),
                 decoration: BoxDecoration(
                   color: normalColor,
                   borderRadius: BorderRadius.only(

@@ -2,13 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/utils/url_api.dart';
 
-Future<List<Pokemon>> fetchPokemon() async {
-  final response =
-      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/?limit=151'));
-
-  List<Pokemon>? pokemonList = [];
-
+Future<List<Pokemon>> fetchPokemon(int cont, List<Pokemon> pokemonList) async {
+  final response = await http.get(Uri.parse('$API_URL?offset=$cont'));
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
