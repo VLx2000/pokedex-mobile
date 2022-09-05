@@ -15,7 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late Future<List<Pokemon>> futurePokemon;
+  late Future<List<Pokemon>> futurePokemonList;
   late List<Pokemon> pokemonList;
   late int _pageNumber;
   final int _numberOfCards = 20;
@@ -26,15 +26,13 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     _pageNumber = 0;
     pokemonList = [];
-    futurePokemon = fetchPokemon();
+    futurePokemonList = fetchPokemonList();
   }
 
-  Future<List<Pokemon>> fetchPokemon() async {
+  Future<List<Pokemon>> fetchPokemonList() async {
     final response = await http
         .get(Uri.parse('$API_URL?offset=$_pageNumber&limit=$_numberOfCards'));
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
       final list = jsonDecode(response.body);
       List<Pokemon> newPokemonList = [];
       for (var pokemon in (list["results"] as List)) {
@@ -50,8 +48,6 @@ class _HomeViewState extends State<HomeView> {
 
       return pokemonList;
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load pokemon');
     }
   }
@@ -75,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: Center(
           child: FutureBuilder<List<Pokemon>>(
-            future: futurePokemon,
+            future: futurePokemonList,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Pokemon> list = snapshot.data ?? [];
@@ -84,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
                   itemCount: list.length + 1,
                   itemBuilder: (context, i) {
                     if (i == list.length - _nextPageTrigger) {
-                      futurePokemon = fetchPokemon();
+                      futurePokemonList = fetchPokemonList();
                     }
                     if (i == list.length) {
                       /* return Image.asset('assets/pokebola.gif'); */

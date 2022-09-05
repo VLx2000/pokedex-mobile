@@ -3,10 +3,10 @@ import 'package:pokedex/utils/poke_colors.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 
-class PokemonCard extends StatelessWidget {
+class PokemonDetails extends StatelessWidget {
   final Pokemon pokemon;
 
-  const PokemonCard({super.key, required this.pokemon});
+  const PokemonDetails({super.key, required this.pokemon});
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +19,11 @@ class PokemonCard extends StatelessWidget {
 
     double borderValue = 24.0;
 
-    return InkWell(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).pushNamed(
-          '/pokemon',
-          arguments: pokemon.id.toString(),
-        );
-      },
+    return Container(
+      decoration: BoxDecoration(
+        color: desaturatedColor,
+      ),
       child: Ink(
-        height: 140.0,
-        /* margin: const EdgeInsets.only(bottom: 16.0), */
-        decoration: BoxDecoration(
-          color: desaturatedColor,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(borderValue),
-          boxShadow: const <BoxShadow>[
-            BoxShadow(
-              color: Colors.black54,
-              blurRadius: 10.0,
-              offset: Offset(2.0, 2.0),
-            ),
-          ],
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -48,42 +31,32 @@ class PokemonCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.only(
-                      left: 14,
-                      right: 14,
-                      top: 8,
-                    ),
+                    padding: const EdgeInsets.all(24),
                     child: Text(
                       StringUtils.capitalize(pokemon.name),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 28,
                         color: contrastColor,
                       ),
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                    left: 14,
-                    right: 14,
-                    top: 8,
-                    bottom: 8,
-                  ),
+                  padding: const EdgeInsets.all(18),
+                  margin: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
                     color: normalColor,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(borderValue),
-                      bottomLeft: Radius.circular(borderValue),
-                    ),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(borderValue)),
                   ),
                   child: Text(
                     '#${(pokemon.id).toString()}',
                     textAlign: TextAlign.end,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 24,
                       color: contrastColor,
                     ),
                   ),
@@ -103,7 +76,7 @@ class PokemonCard extends StatelessWidget {
                   children: [
                     for (var aux in pokemon.tipos)
                       Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(12),
                         margin: const EdgeInsets.symmetric(
                           horizontal: 20.0,
                           vertical: 6.0,
@@ -129,6 +102,14 @@ class PokemonCard extends StatelessWidget {
                 ),
               ],
             ),
+            /* Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [Text('data')],
+                )
+              ],
+            ) */
           ],
         ),
       ),
