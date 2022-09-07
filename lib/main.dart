@@ -1,5 +1,5 @@
-import 'package:pokedex/views/home.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedex/views/pokedex.dart';
 import 'package:pokedex/views/pokemon.dart';
 
 void main() {
@@ -8,7 +8,7 @@ void main() {
       initialRoute: '/',
       onGenerateRoute: (settings) {
         if (settings.name == '/') {
-          return MaterialPageRoute(builder: (context) => const HomeView());
+          return MaterialPageRoute(builder: (context) => const PokedexView());
         }
         if (settings.name == '/pokemon') {
           var args = settings.arguments;
