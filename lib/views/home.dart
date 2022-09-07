@@ -15,7 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late Future<List<Pokemon>> futurePokemonList;
+  late Future<List<Pokemon>>? futurePokemonList;
   late List<Pokemon> pokemonList;
   late int _pageNumber;
   final int _numberOfCards = 20;
@@ -30,25 +30,28 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<List<Pokemon>> fetchPokemonList() async {
-    final response = await http
-        .get(Uri.parse('$API_URL?offset=$_pageNumber&limit=$_numberOfCards'));
-    if (response.statusCode == 200) {
-      final list = jsonDecode(response.body);
-      List<Pokemon> newPokemonList = [];
-      for (var pokemon in (list["results"] as List)) {
-        final details = await http.get(Uri.parse(pokemon['url']));
-        newPokemonList.add(Pokemon.fromJson(
-            details.statusCode == 200 ? jsonDecode(details.body) : []));
+    try {
+      final response = await http
+          .get(Uri.parse('$API_URL?offset=$_pageNumber&limit=$_numberOfCards'));
+      if (response.statusCode == 200) {
+        final list = jsonDecode(response.body);
+        List<Pokemon> newPokemonList = [];
+        for (var pokemon in (list["results"] as List)) {
+          final details = await http.get(Uri.parse(pokemon['url']));
+          newPokemonList.add(Pokemon.fromJson(
+              details.statusCode == 200 ? jsonDecode(details.body) : []));
+        }
+
+        setState(() {
+          _pageNumber = _pageNumber + _numberOfCards;
+          pokemonList.addAll(newPokemonList);
+        });
+        return pokemonList;
+      } else {
+        throw Exception('erro');
       }
-
-      setState(() {
-        _pageNumber = _pageNumber + _numberOfCards;
-        pokemonList.addAll(newPokemonList);
-      });
-
-      return pokemonList;
-    } else {
-      throw Exception('Failed to load pokemon');
+    } catch (e) {
+      throw Exception('erro');
     }
   }
 
@@ -89,7 +92,10 @@ class _HomeViewState extends State<HomeView> {
                           margin: const EdgeInsets.only(bottom: 16.0),
                           child: Image.asset('assets/pokebola.gif'));
                     }
-                    return PokemonCard(pokemon: snapshot.data![i]);
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      child: PokemonCard(pokemon: snapshot.data![i]),
+                    );
                   },
                 );
               } else if (snapshot.hasError) {

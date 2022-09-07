@@ -95,7 +95,7 @@ class PokemonCard extends StatelessWidget {
               children: [
                 FadeInImage.assetNetwork(
                   placeholder: 'assets/pokebola.gif',
-                  image: pokemon.sprite,
+                  image: pokemon.logo,
                   height: 100.0,
                 ),
                 Column(

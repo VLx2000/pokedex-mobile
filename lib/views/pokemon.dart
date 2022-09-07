@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:pokedex/components/pokemon_details.dart';
-import 'package:pokedex/models/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/utils/url_api.dart';
 
 class PokemonView extends StatelessWidget {
